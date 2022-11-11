@@ -5,7 +5,7 @@ from app.config import Config
 
 
 @celery_app.task
-def send_email(receiver, subject, body, content_type='text/html'):
+def send_email(receiver: str, subject: str, body: str, content_type: str = 'text/html'):
     message = EmailMessage()
     message['From'] = Config.APP_TITLE
     message['To'] = receiver

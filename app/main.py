@@ -7,7 +7,7 @@ from app.config import Config
 
 def create_fastapi_app() -> FastAPI:
     app = FastAPI()
-    app.include_router(user, prefix='/api/v1')
+    app.include_router(user, prefix='/api/v1/user')
     extensions()
     return app
 
