@@ -5,7 +5,7 @@ from contextlib import contextmanager
 
 Base = declarative_base()
 engine = create_engine(Config.DATABASE_URI)
-Session = sessionmaker(bind=engine)
+Session = sessionmaker(bind=engine, expire_on_commit=False)
 
 
 @contextmanager
