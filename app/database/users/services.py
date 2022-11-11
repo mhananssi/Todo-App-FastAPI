@@ -13,15 +13,15 @@ def register_user(user: CreateUser):
     return db_user
 
 
-def get_user_by_email(email):
+def get_user_by_email(email: str):
     with session_scope() as s:
         db_user = s.query(User).filter(User.email == email).first()
 
     return db_user
 
 
-def verify_user_email(id):
+def verify_user_email(user_id: int):
     with session_scope() as s:
-        user = s.query(User).filter(User.id == id).first()
+        user = s.query(User).filter(User.id == user_id).first()
         user.is_verified = True
         s.add(user)
