@@ -8,5 +8,5 @@ class Config:
     CELERY_CONFIG = {
         'broker_url': 'amqp://',
         'result_backend': 'rpc://',
-        'task_modules': []
+        'task_modules': ['app.celerytasks.tasks']
     }
