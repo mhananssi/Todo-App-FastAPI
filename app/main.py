@@ -1,11 +1,13 @@
 from fastapi import FastAPI
 from app.extensions import Base, engine
+from app.routers.users import router as user
 from celery import Celery
 from app.config import Config
 
 
 def create_fastapi_app() -> FastAPI:
     app = FastAPI()
+    app.include_router(user, prefix='/api/v1')
     extensions()
     return app
 
