@@ -1,6 +1,6 @@
-from app.database.users.model import User
+from app.database.auth.model import User
 from app.extensions import session_scope
-from app.database.users.schema import CreateUser
+from app.database.auth.schema import CreateUser
 from app.utils.utils import generate_pword_hash
 
 

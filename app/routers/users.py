@@ -1,12 +1,12 @@
 from fastapi import APIRouter, HTTPException, status
-from app.database.users import services
-from app.database.users.schema import CreateUser
+from app.database.auth import services
+from app.database.auth.schema import CreateUser
 from app.utils.utils import body_verification_email, subject_verification_email
 
 router = APIRouter()
 
 
-@router.post('/user', response_model=dict, status_code=status.HTTP_201_CREATED)
+@router.post('/register', response_model=dict, status_code=status.HTTP_201_CREATED)
 async def create_user(user: CreateUser):
     db_user = services.get_user_by_email(user.email)
     if db_user:
@@ -18,7 +18,7 @@ async def create_user(user: CreateUser):
     return {'Success': 'User created successfully. Verify via email.'}
 
 
-@router.put('/verify/{user_id}', response_model=dict, status_code=status.HTTP_202_ACCEPTED)
+@router.get('/verify/{user_id}', response_model=dict, status_code=status.HTTP_202_ACCEPTED)
 async def verify_user(user_id: int):
     services.verify_user_email(user_id)
     return {'Success': 'User verified successfully.'}
