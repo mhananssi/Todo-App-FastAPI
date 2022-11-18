@@ -25,3 +25,13 @@ class CreateUser(BaseModel):
         if 'password' in values and v != values['password']:
             raise ValueError('Passwords do not match')
         return v
+
+
+class UserLogin(BaseModel):
+    email: str
+    password: str
+
+    @validator('email')
+    def validate_email(cls, v):
+        validate_email(v)
+        return v
