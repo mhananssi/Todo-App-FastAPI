@@ -1,5 +1,5 @@
 from fastapi import APIRouter, status, HTTPException, Request, Depends
-from app.database.todo.schema import CreateTodoItem
+from app.database.todo.schema import CreateTodoItem, UpdateTodoItem
 from app.database.todo import services
 from app.extensions import authorize
 
@@ -14,6 +14,16 @@ async def add_todoitem(request: Request, item: CreateTodoItem):
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Item already exists.')
     db_item = services.create_item(user_id, item)
     return {'Success': 'Todo Item added successfully.', 'Item': db_item}
+
+
+@router.put('/update-item/{item_id}', response_model=dict, status_code=status.HTTP_200_OK)
+async def update_todoitem(request: Request, item_id: int, item: UpdateTodoItem):
+    user_id = request.state.user_id
+    db_item = services.item_exits(item_id)
+    if not db_item or db_item.user_id != user_id:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Item not found.')
+    services.update_item(item_id, item)
+    return {'Success': 'Todo Item updated successfully.'}
 
 
 @router.get('/all', response_model=list, status_code=status.HTTP_200_OK)
