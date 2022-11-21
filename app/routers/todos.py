@@ -24,3 +24,11 @@ async def update_todoitem(request: Request, item_id: int, item: UpdateTodoItem):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Item not found.')
     services.update_item(item_id, item)
     return {'Success': 'Todo Item updated successfully.'}
+
+
+@router.get('/all', response_model=list, status_code=status.HTTP_200_OK)
+async def get_all_todoitems(request: Request):
+    user_id = request.state.user_id
+    items = services.get_all_todoitems(user_id)
+    items.sort(key=lambda item: item.due_date)
+    return items

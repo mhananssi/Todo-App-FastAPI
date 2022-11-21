@@ -34,3 +34,9 @@ def update_item(item_id: int, item: UpdateTodoItem):
         if item.due_date:
             db_item.due_date = item.due_date
         s.add(db_item)
+
+
+def get_all_todoitems(user_id):
+    with session_scope() as s:
+        db_items = s.query(TodoItem).filter(TodoItem.user_id == user_id).all()
+    return db_items
