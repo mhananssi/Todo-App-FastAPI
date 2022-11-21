@@ -6,15 +6,14 @@ from datetime import datetime
 
 def create_item(user_id, item: CreateTodoItem):
     with session_scope() as s:
-        db_item = TodoItem(user_id=user_id, title=item.title, description=item.description, datetime=item.datetime)
+        db_item = TodoItem(user_id=user_id, title=item.title, due_date=item.due_date)
         s.add(db_item)
 
     return db_item
 
 
-def get_item(user_id: int, title: str, description: str, datetime: datetime):
+def get_item(user_id: int, title: str, due_date: datetime):
     with session_scope() as s:
         db_item = s.query(TodoItem).filter(TodoItem.user_id == user_id, TodoItem.title == title,
-                                           TodoItem.description == description,
-                                           TodoItem.datetime == datetime).first()
+                                           TodoItem.due_date == due_date).first()
     return db_item
