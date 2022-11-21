@@ -17,3 +17,9 @@ def get_item(user_id: int, title: str, due_date: datetime):
         db_item = s.query(TodoItem).filter(TodoItem.user_id == user_id, TodoItem.title == title,
                                            TodoItem.due_date == due_date).first()
     return db_item
+
+
+def get_all_todoitems(user_id):
+    with session_scope() as s:
+        db_items = s.query(TodoItem).filter(TodoItem.user_id == user_id).all()
+    return db_items
