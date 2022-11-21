@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from app.extensions import Base, engine
 from app.routers.users import router as user
+from app.routers.todos import router as todo
 from celery import Celery
 from app.config import Config
 
@@ -8,6 +9,7 @@ from app.config import Config
 def create_fastapi_app() -> FastAPI:
     app = FastAPI()
     app.include_router(user, prefix='/api/v1/user')
+    app.include_router(todo, prefix='/api/v1/todo')
     extensions()
     return app
 
