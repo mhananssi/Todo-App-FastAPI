@@ -42,3 +42,13 @@ async def delete_todoitem(request: Request, item_id: int):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Item not found.')
     services.delete_item(item_id)
     return {'Success': 'Item deleted successfully.'}
+
+
+@router.put('/done/{item_id}', response_model=dict, status_code=status.HTTP_200_OK)
+async def mark_todoitem_done(request: Request, item_id: int):
+    user_id = request.state.user_id
+    db_item = services.item_exits(item_id)
+    if not db_item or db_item.user_id != user_id:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Item not found.')
+    services.mark_done(item_id)
+    return {'Success': 'Todo Item marked done.'}
