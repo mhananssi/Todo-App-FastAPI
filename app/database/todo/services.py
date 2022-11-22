@@ -46,3 +46,10 @@ def delete_item(item_id):
     with session_scope() as s:
         db_item = s.query(TodoItem).filter(TodoItem.id == item_id).first()
         s.delete(db_item)
+
+
+def mark_done(item_id):
+    with session_scope() as s:
+        db_item = s.query(TodoItem).filter(TodoItem.id == item_id).first()
+        db_item.is_done = True
+        s.add(db_item)
