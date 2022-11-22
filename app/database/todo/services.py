@@ -40,3 +40,9 @@ def get_all_todoitems(user_id):
     with session_scope() as s:
         db_items = s.query(TodoItem).filter(TodoItem.user_id == user_id).all()
     return db_items
+
+
+def delete_item(item_id):
+    with session_scope() as s:
+        db_item = s.query(TodoItem).filter(TodoItem.id == item_id).first()
+        s.delete(db_item)

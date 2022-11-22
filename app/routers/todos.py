@@ -32,3 +32,13 @@ async def get_all_todoitems(request: Request):
     items = services.get_all_todoitems(user_id)
     items.sort(key=lambda item: item.due_date)
     return items
+
+
+@router.delete('/delete-item/{item_id}', response_model=dict, status_code=status.HTTP_200_OK)
+async def delete_todoitem(request: Request, item_id: int):
+    user_id = request.state.user_id
+    db_item = services.item_exits(item_id)
+    if not db_item or db_item.user_id != user_id:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Item not found.')
+    services.delete_item(item_id)
+    return {'Success': 'Item deleted successfully.'}
