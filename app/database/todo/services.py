@@ -53,3 +53,10 @@ def mark_done(item_id):
         db_item = s.query(TodoItem).filter(TodoItem.id == item_id).first()
         db_item.is_done = True
         s.add(db_item)
+
+
+def get_all_done_items(user_id):
+    with session_scope() as s:
+        db_items = s.query(TodoItem).filter(TodoItem.user_id == user_id, TodoItem.is_done == True).all()
+
+    return db_items
