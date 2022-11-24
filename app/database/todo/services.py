@@ -1,7 +1,8 @@
 from app.database.todo.schema import CreateTodoItem, UpdateTodoItem
 from app.extensions import session_scope
 from app.database.todo.model import TodoItem
-from datetime import datetime
+from datetime import datetime, date
+from sqlalchemy import func
 
 
 def create_item(user_id, item: CreateTodoItem):
@@ -58,5 +59,13 @@ def mark_done(item_id):
 def get_all_done_items(user_id):
     with session_scope() as s:
         db_items = s.query(TodoItem).filter(TodoItem.user_id == user_id, TodoItem.is_done == True).all()
+
+    return db_items
+
+
+def get_items_due_today(user_id):
+    with session_scope() as s:
+        db_items = s.query(TodoItem).filter(TodoItem.user_id == user_id, func.date(TodoItem.due_date) == date.today(),
+                                            TodoItem.is_done == False).all()
 
     return db_items

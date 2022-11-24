@@ -60,3 +60,11 @@ async def get_all_done_todoitems(request: Request):
     items = services.get_all_done_items(user_id)
     items.sort(key=lambda item: item.due_date)
     return items
+
+
+@router.get('/due-today', response_model=list, status_code=status.HTTP_200_OK)
+async def get_todoitems_due_today(request: Request):
+    user_id = request.state.user_id
+    items = services.get_items_due_today(user_id)
+    items.sort(key=lambda item: item.due_date)
+    return items
