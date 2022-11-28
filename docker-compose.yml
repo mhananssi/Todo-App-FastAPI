@@ -3,47 +3,49 @@ version: "3.8"
 services:
   pgdb:
     image: postgres
-    container_name: pg
+    container_name: ${POSTGRES_CONTAINER}
     ports:
-      - "5432:5432"
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
     env_file:
       - .env
-    networks:
-      - backend
+    healthcheck:
+      test: pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}
+      interval: 5s
+      timeout: 5s
+      retries: 10
   rabbitmq:
     image: rabbitmq
-    container_name: rmq
+    container_name: ${RABBITMQ_CONTAINER}
     ports:
-      - "5672:5672"
-    networks:
-      - backend
+      - ${RABBITMQ_PORT}:${RABBITMQ_PORT}
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 5s
+      timeout: 5s
+      retries: 10
   celery:
     build:
       context: .
-      dockerfile: ./app/docker/celery/Dockerfile
-    container_name: celery
+      dockerfile: docker/celery/Dockerfile
+    container_name: ${CELERY_CONTAINER}
     env_file:
       - .env
     depends_on:
-      - pgdb
-      - rabbitmq
-    networks:
-      - backend
+      pgdb:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
   fastapi:
     build:
       context: .
-      dockerfile: ./app/docker/fastapi/Dockerfile
-    container_name: fastapi
+      dockerfile: docker/fastapi/Dockerfile
+    container_name: ${APP_CONTAINER}
     ports:
-      - "8000:8000"
+      - ${APP_PORT}:${APP_PORT}
     env_file:
       - .env
     depends_on:
-      - pgdb
-      - rabbitmq
-    networks:
-      - backend
-
-networks:
-  backend:
-    driver: bridge
+      pgdb:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy

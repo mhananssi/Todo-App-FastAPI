@@ -12,7 +12,7 @@ async def create_user(user: CreateUser):
     if db_user:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Email already registered. Login instead.')
     db_user = services.register_user(user)
-    from app.celerytasks.tasks import send_email
+    from app.tasks.tasks import send_email
     send_email.delay(receiver=db_user.email, subject=subject_verification_email(),
                      body=body_verification_email(db_user.id, db_user.uname))
     return {'Success': 'User created successfully. Verify via email.'}

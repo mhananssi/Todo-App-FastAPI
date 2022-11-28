@@ -17,5 +17,5 @@ class Config:
     CELERY_CONFIG = {
         'broker_url': f"amqp://{env['RABBITMQ_USER']}:{env['RABBITMQ_PASSWORD']}@{env['RABBITMQ_CONTAINER']}:{env['RABBITMQ_PORT']}//",
         'result_backend': 'rpc://',
-        'task_modules': ['app.celerytasks.tasks']
+        'task_modules': ['app.tasks.tasks']
     }
