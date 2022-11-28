@@ -1,0 +1,306 @@
+{
+	"info": {
+		"_postman_id": "c5108f8f-1b51-4e0d-85fd-902b721da54a",
+		"name": "Todo App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22394125"
+	},
+	"item": [
+		{
+			"name": "TODO APP - HOME",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{LOCAL_BASE_URL}}",
+					"host": [
+						"{{LOCAL_BASE_URL}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TODO APP - SIGNUP",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"email@gmail.com\",\n  \"uname\": \"uname\",\n  \"password\": \"password\",\n  \"confirm_password\": \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{LOCAL_BASE_URL}}/api/v1/user/register",
+					"host": [
+						"{{LOCAL_BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TODO APP - VERIFY",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{LOCAL_BASE_URL}}/api/v1/user/verify/1",
+					"host": [
+						"{{LOCAL_BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"verify",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TODO APP - LOGIN",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"email@gmail.com\",\n  \"password\": \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{LOCAL_BASE_URL}}/api/v1/user/login",
+					"host": [
+						"{{LOCAL_BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TODO APP - ADD ITEM",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Task\",\n  \"due_date\": \"2022-12-02T23:43:13.126Z\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{LOCAL_BASE_URL}}/api/v1/todo/add-item",
+					"host": [
+						"{{LOCAL_BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"todo",
+						"add-item"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TODO APP - GET ALL ITEMS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{LOCAL_BASE_URL}}/api/v1/todo/all",
+					"host": [
+						"{{LOCAL_BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"todo",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TODO APP - UPDATE ITEM",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\":\"Task\",\n  \"due_date\": \"2022-11-16T21:12:42.790Z\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{LOCAL_BASE_URL}}/api/v1/todo/update-item/2",
+					"host": [
+						"{{LOCAL_BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"todo",
+						"update-item",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TODO APP - DELETE ITEM",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{LOCAL_BASE_URL}}/api/v1/todo/delete-item/2",
+					"host": [
+						"{{LOCAL_BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"todo",
+						"delete-item",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TODO APP - MARK ITEM DONE",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{LOCAL_BASE_URL}}/api/v1/todo/done/3",
+					"host": [
+						"{{LOCAL_BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"todo",
+						"done",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TODO APP - GET ALL DONE ITEMS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{LOCAL_BASE_URL}}/api/v1/todo/all-done",
+					"host": [
+						"{{LOCAL_BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"todo",
+						"all-done"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TODO APP - GET TODAY ITEMS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{LOCAL_BASE_URL}}/api/v1/todo/due-today",
+					"host": [
+						"{{LOCAL_BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"todo",
+						"due-today"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MX0.Ye0qYHbElGyNpRhrKfpdDlcq3hT23hob2viGYG-fZZI",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "token",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "LOCAL_BASE_URL",
+			"value": "http://127.0.0.1:8000",
+			"type": "string"
+		}
+	]
+}

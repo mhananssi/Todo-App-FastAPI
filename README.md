@@ -1,75 +1,41 @@
 # FastAPI for Todo App
 
-### Setup Project
+## Project Setup
 
-Create virtual environment
+### Create virtual env:
+    python3.11 -m venv venv
 
-```bash
-python3.11 -m venv venv
-```
+### Activate virtual env:
+    source venv/bin/activate
 
-Activating created virtual environment
+### For installing app dependencies:
+    pip install -r requirements.txt
 
-```bash
-source venv/bin/activate 
-```
+### For running postgres docker container:
+    docker run -d -p 5432:5432 --name pg -e POSTGRES_PASSWORD="password" postgres
 
-Install app dependencies
+### For running rabbitmq docker container:
+    docker run -d -p 5672:5672 rabbitmq
 
-```bash
-pip install -r requirements.txt 
-```
+### For running celery worker:
+    celery --app app.main.celery_app worker -l INFO
 
-___
+### For running fastapi app:
+    uvicorn app.main:app --reload
 
-### Running Application
+### Running services through docker-compose.yml:
+    docker-compose up
 
-To run docker for postgres, use:
+## Accessing application
 
-```bash
-docker run -d -p 5432:5432 --name pg -e POSTGRES_PASSWORD="password" postgres
-```
+- ### Application: http://127.0.0.1:8000
+- ### Swagger documentation: http://127.0.0.1:8000/docs
+- ### Redoc documentation: http://127.0.0.1:8000/redoc
 
-To run docker for postgres admin, use:
+## Source Documentation
 
-```bash
-docker run -d -p 5555:80 --name pgadmin -e PGADMIN_DEFAULT_EMAIL="email@gmail.com" -e PGADMIN_DEFAULT_PASSWORD="password"  dpage/pgadmin4
-```
-
-To run docker for rabbitmq, use:
-
-```bash
-docker run -d -p 5672:5672 rabbitmq
-```
-
-To start celery application, run:
-
-```bash
- celery --app app.main.celery_app worker -l INFO
-```
-
-To start fastapi application, run:
-
-```bash
-uvicorn app.main:app --reload
-```
-
-### Acessing on local
-
-The application will get started in http://127.0.0.1:8000
-
-Swagger Documentation: http://127.0.0.1:8000/docs
-
-Redoc Documentation: http://127.0.0.1:8000/redoc
-
-### Source Documentation
-
-- [FastAPI](https://fastapi.tiangolo.com/)
-
-- [SQL](https://fastapi.tiangolo.com/tutorial/sql-databases/)
-
-- [Pydantic](https://pydantic-docs.helpmanual.io/)
-
-- [SQL Relational Database SQLAlchemy by FastAPI](https://fastapi.tiangolo.com/tutorial/sql-databases/?h=databa#sql-relational-databases)
-
-- [SQLAlchemy](https://docs.sqlalchemy.org/en/14/tutorial/engine.html)  
+- ### [FastAPI](https://fastapi.tiangolo.com/)
+- ### [SQL](https://fastapi.tiangolo.com/tutorial/sql-databases/)
+- ### [Pydantic](https://pydantic-docs.helpmanual.io/)
+- ### [SQL Relational Database SQLAlchemy by FastAPI](https://fastapi.tiangolo.com/tutorial/sql-databases/?h=databa#sql-relational-databases)
+- ### [SQLAlchemy](https://docs.sqlalchemy.org/en/14/tutorial/engine.html)
