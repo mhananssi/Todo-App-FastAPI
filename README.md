@@ -1,41 +1,34 @@
-# FastAPI for Todo App
+<h1> FastAPI for Todo App </h1>
 
-## Project Setup
+<h2> Project Setup </h2>
 
-### Create virtual env:
-    python3.11 -m venv venv
+<p> Running app through <a href="https://docs.docker.com/compose/">docker-compose</a> <pre> <code> docker-compose up </code> </pre> <p>
 
-### Activate virtual env:
-    source venv/bin/activate
+<p> To tear down the setup <pre> <code> docker-compose down </code> </pre> <p>
 
-### For installing app dependencies:
-    pip install -r requirements.txt
+<h2> Accessing Application </h2>
 
-### For running postgres docker container:
-    docker run -d -p 5432:5432 --name pg -e POSTGRES_PASSWORD="password" postgres
+<table>
+  <tr>
+    <td>todo api</td>
+    <td><a href="http://localhost:8000">http://localhost:8000</a></td>
+  </tr>
+  <tr>
+    <td>swagger documentation</td>
+    <td><a href="http://localhost:8000/docs">http://localhost:8000/docs</a></td>
+  </tr>
+    <tr>
+    <td>redoc documentation</td>
+    <td><a href="http://localhost:8000/redoc">http://localhost:8000/redoc</a></td>
+  </tr>
+  <tr>
+    <td>postgres database</td>
+    <td>postgres-container-ip:5432</td>
+  </tr>
+</table>
 
-### For running rabbitmq docker container:
-    docker run -d -p 5672:5672 rabbitmq
+<p><small> You can access the database using some database client. Use <a href="https://docs.docker.com/engine/reference/commandline/inspect/">docker inspect</a> to find the postgres-container-ip </small> </p>
 
-### For running celery worker:
-    celery --app app.main.celery_app worker -l INFO
+<h2> Installing package in a running container using <a href="https://docs.docker.com/engine/reference/commandline/exec/">docker exec</a></h2>
 
-### For running fastapi app:
-    uvicorn app.main:app --reload
-
-### Running services through docker-compose.yml:
-    docker-compose up
-
-## Accessing application
-
-- ### Application: http://127.0.0.1:8000
-- ### Swagger documentation: http://127.0.0.1:8000/docs
-- ### Redoc documentation: http://127.0.0.1:8000/redoc
-
-## Source Documentation
-
-- ### [FastAPI](https://fastapi.tiangolo.com/)
-- ### [SQL](https://fastapi.tiangolo.com/tutorial/sql-databases/)
-- ### [Pydantic](https://pydantic-docs.helpmanual.io/)
-- ### [SQL Relational Database SQLAlchemy by FastAPI](https://fastapi.tiangolo.com/tutorial/sql-databases/?h=databa#sql-relational-databases)
-- ### [SQLAlchemy](https://docs.sqlalchemy.org/en/14/tutorial/engine.html)
+<pre> <code> docker exec container pip install package </code> </pre>
