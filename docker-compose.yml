@@ -1,0 +1,51 @@
+version: "3.8"
+
+services:
+  pgdb:
+    image: postgres
+    container_name: ${POSTGRES_CONTAINER}
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    env_file:
+      - .env
+    healthcheck:
+      test: pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  rabbitmq:
+    image: rabbitmq
+    container_name: ${RABBITMQ_CONTAINER}
+    ports:
+      - ${RABBITMQ_PORT}:${RABBITMQ_PORT}
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  celery:
+    build:
+      context: .
+      dockerfile: docker/celery/Dockerfile
+    container_name: ${CELERY_CONTAINER}
+    env_file:
+      - .env
+    depends_on:
+      pgdb:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+  fastapi:
+    build:
+      context: .
+      dockerfile: docker/fastapi/Dockerfile
+    container_name: ${APP_CONTAINER}
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    env_file:
+      - .env
+    depends_on:
+      pgdb:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
