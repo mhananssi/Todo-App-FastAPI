@@ -36,3 +36,16 @@ def body_verification_email(user_id: int, username: str = 'User'):
 
 def subject_verification_email():
     return 'Please verify your email'
+
+
+def format_todos(user_todos_dict: dict):
+    formatted_todos_dict = {}
+    for user, todos in user_todos_dict.items():
+        body = ''
+        for todo in todos:
+            body += f"""
+            Todo: {todo.title}
+            Due : {todo.due_date.time()}
+"""
+        formatted_todos_dict[user] = body
+    return formatted_todos_dict

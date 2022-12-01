@@ -3,6 +3,7 @@ from app.extensions import session_scope
 from app.database.todo.model import TodoItem
 from datetime import datetime, date
 from sqlalchemy import func
+from collections import defaultdict
 
 
 def create_item(user_id, item: CreateTodoItem):
@@ -69,3 +70,13 @@ def get_items_due_today(user_id):
                                             TodoItem.is_done == False).all()
 
     return db_items
+
+
+def get_users_due_today_todos_dict():
+    users_todos_dict = defaultdict(list)
+    with session_scope() as s:
+        db_items = s.query(TodoItem).filter(func.date(TodoItem.due_date) == date.today(),
+                                            TodoItem.is_done == False).all()
+        for item in db_items:
+            users_todos_dict[item.user.email].append(item)
+    return dict(users_todos_dict)

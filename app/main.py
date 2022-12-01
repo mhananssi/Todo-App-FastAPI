@@ -15,12 +15,8 @@ def create_fastapi_app() -> FastAPI:
 
 
 def create_celery_app() -> Celery:
-    celery_app = Celery(broker=Config.CELERY_CONFIG['broker_url'], backend=Config.CELERY_CONFIG['result_backend'],
-                        include=Config.CELERY_CONFIG['task_modules'])
-    celery_app.conf.update(
-        result_expires=3600,
-    )
-
+    celery_app = Celery()
+    celery_app.conf.update(Config.CELERY_CONFIG)
     return celery_app
 
 
