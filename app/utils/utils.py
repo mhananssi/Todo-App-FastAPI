@@ -41,11 +41,26 @@ def subject_verification_email():
 def format_todos(user_todos_dict: dict):
     formatted_todos_dict = {}
     for user, todos in user_todos_dict.items():
-        body = ''
+        body = """
+        <html><head><style>
+        table {
+          border-collapse: collapse;
+          width: 100%;
+        }
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+        </style></head><body><table><tr><th>Todo</th><th>Due</th></tr>
+        """
         for todo in todos:
-            body += f"""
-            Todo: {todo.title}
-            Due : {todo.due_date.time()}
-"""
+            body += '<tr>'
+            body += f'<td>{todo.title}</td>'
+            body += f'<td>{todo.due_date.strftime("%H:%M:%S %p")}</td>'
+            body += '</tr>'
+        body += """
+        </table></body></html>
+        """
         formatted_todos_dict[user] = body
     return formatted_todos_dict
