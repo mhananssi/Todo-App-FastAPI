@@ -35,6 +35,18 @@ services:
         condition: service_healthy
       rabbitmq:
         condition: service_healthy
+  celerybeat:
+    build:
+      context: .
+      dockerfile: docker/celerybeat/Dockerfile
+    container_name: celerybeat
+    env_file:
+      - .env
+    depends_on:
+      pgdb:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
   fastapi:
     build:
       context: .
