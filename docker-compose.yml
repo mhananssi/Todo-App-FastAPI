@@ -39,9 +39,23 @@ services:
     build:
       context: .
       dockerfile: docker/celerybeat/Dockerfile
-    container_name: celerybeat
+    container_name: ${CELERYBEAT_CONTAINER}
     env_file:
       - .env
+    depends_on:
+      pgdb:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+  flower:
+    build:
+      context: .
+      dockerfile: docker/flower/Dockerfile
+    container_name: ${FLOWER_CONTAINER}
+    env_file:
+      - .env
+    ports:
+      - ${FLOWER_PORT}:${FLOWER_PORT}
     depends_on:
       pgdb:
         condition: service_healthy
