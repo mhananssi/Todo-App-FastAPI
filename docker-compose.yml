@@ -23,6 +23,17 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+  flower:
+    image: mher/flower
+    container_name: ${FLOWER_CONTAINER}
+    ports:
+      - ${FLOWER_PORT}:${FLOWER_PORT}
+    env_file:
+      - .env
+    command: celery --broker ${BROKER_URL} flower --loglevel INFO
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
   celery:
     build:
       context: .
@@ -42,20 +53,6 @@ services:
     container_name: ${CELERYBEAT_CONTAINER}
     env_file:
       - .env
-    depends_on:
-      pgdb:
-        condition: service_healthy
-      rabbitmq:
-        condition: service_healthy
-  flower:
-    build:
-      context: .
-      dockerfile: docker/flower/Dockerfile
-    container_name: ${FLOWER_CONTAINER}
-    env_file:
-      - .env
-    ports:
-      - ${FLOWER_PORT}:${FLOWER_PORT}
     depends_on:
       pgdb:
         condition: service_healthy
