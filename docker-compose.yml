@@ -18,11 +18,24 @@ services:
     container_name: ${RABBITMQ_CONTAINER}
     ports:
       - ${RABBITMQ_PORT}:${RABBITMQ_PORT}
+    env_file:
+      - .env
     healthcheck:
       test: rabbitmq-diagnostics -q ping
       interval: 5s
       timeout: 5s
       retries: 10
+  flower:
+    image: mher/flower
+    container_name: ${FLOWER_CONTAINER}
+    ports:
+      - ${FLOWER_PORT}:${FLOWER_PORT}
+    env_file:
+      - .env
+    command: celery --broker ${BROKER_URL} flower --loglevel INFO
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
   celery:
     build:
       context: .
@@ -39,7 +52,7 @@ services:
     build:
       context: .
       dockerfile: docker/celerybeat/Dockerfile
-    container_name: celerybeat
+    container_name: ${CELERYBEAT_CONTAINER}
     env_file:
       - .env
     depends_on:
