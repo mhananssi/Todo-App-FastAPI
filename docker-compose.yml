@@ -18,6 +18,8 @@ services:
     container_name: ${RABBITMQ_CONTAINER}
     ports:
       - ${RABBITMQ_PORT}:${RABBITMQ_PORT}
+    env_file:
+      - .env
     healthcheck:
       test: rabbitmq-diagnostics -q ping
       interval: 5s
